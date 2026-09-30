@@ -73,6 +73,9 @@
       "not dead",
       "not op_mini all"
     ],
+    "overrides": {
+    "ajv": "^6.12.6"
+  }
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
