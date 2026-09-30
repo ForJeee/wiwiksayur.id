@@ -67,21 +67,20 @@
     "build": "craco build",
     "test": "craco test"
   },
-  "browserslist": {
+"browserslist": {
     "production": [
       ">0.2%",
       "not dead",
       "not op_mini all"
     ],
-},
-    "overrides": {
-      "ajv": "^6.12.6"
-    },
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "ajv": "^6.12.6"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "7.21.11",
