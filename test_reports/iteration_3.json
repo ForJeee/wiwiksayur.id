@@ -1,0 +1,53 @@
+{
+  "summary": "Iteration 3: full backend+frontend verification of the rewritten Wiwik Sayur spec (52-item Wiwik catalog, server-side Nominatim geocode + OSRM driving route, flexible kg/pcs pricing, real Midtrans sandbox Snap, live courier tracking with OSRM route, admin map+alert+bulk price+analytics). 14/14 backend pytest tests PASSED. All critical frontend flows verified end-to-end with browser automation. No blocking bugs.",
+  "tested_scope": ["backend", "frontend", "auth", "integration", "e2e"],
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "passed": [
+    "GET /api/products -> 52 items with correct units (Cabe Kriting Merah=60000/kg, Jagung Manis=6000/pcs)",
+    "GET /api/store/info -> lat=-6.208365, lng=106.796367",
+    "POST /api/geo/resolve Senopati subtotal=100000 -> lat/lng, display_name, distance_km=5.88 (driving route), fee=18000 (8000+ceil(3.88)*2500), route[] populated",
+    "POST /api/geo/resolve Senopati subtotal=1000000 -> free=true, fee=0 (within 7km tier)",
+    "POST /api/geo/resolve bad address 'xxxxxx qqqq...' -> 404",
+    "POST /api/orders (customer, NO lat/lng in body) with quantity 0.2 kg Cabe Kriting Merah -> line_total=12000, quantity_label='200 g', order.lat/lng/verified_address/route/distance_km all populated server-side",
+    "POST /api/orders pcs product quantity=2 Jagung Manis -> line_total=12000, quantity_label='2 pcs'",
+    "POST /api/orders kg quantity=0.05 -> 400 (min 100 g)",
+    "POST /api/payments/midtrans/token -> real sandbox Snap token (mock:false); repeated call returns same token; GET /api/payments/status/{id} stays pending/unpaid until real payment",
+    "POST /api/payments/midtrans/mock-pay/{id} -> 400 (correctly disabled when sandbox keys present)",
+    "PUT /api/admin/orders/{id}/status paid->processing->out_for_delivery->completed sets dispatched_at, delivered_at and increments completed_order_count. GET /api/orders/{id} returns route[] + store{lat,lng}",
+    "PUT /api/admin/products/bulk-price {percent:10, category:'Bawang'} affects ONLY Bawang (rounded to 100); customer call returns 403; {updates:[...]} restore works",
+    "GET /api/admin/analytics returns daily/weekly/monthly/popular_items/customer_growth/total_customers/total_revenue/total_orders",
+    "Loyal user (setia) order has is_priority=true; reguler has false",
+    "Frontend Home: search 'cabe kriting merah', preset-0.25 -> line Rp 15.000, custom 200 g -> line Rp 12.000, unit-g/kg toggle works, kg -add adds cart. pcs -inc/-add works for Jagung Manis",
+    "Frontend Checkout: place-order disabled before verify; verify-address-btn -> geo-result with display_name 'Jalan Senopati, RW 03, Selong, Kebayoran Baru, Jakarta Selatan…', distance-badge 'Rute 5.88 km', map non-draggable with polyline, summary-shipping Rp 18.000 total Rp 42.000; place-order becomes enabled after verify; clicking opens real Midtrans sandbox Snap iframe (app.sandbox.midtrans.com/snap/v4/popup)",
+    "Frontend /payment/pending?order_id=... shows payment-pending + result-order-id",
+    "Frontend /payment/success?order_id=<paid> shows payment-success + track-order-btn (after admin flips status to paid via API)",
+    "Frontend /track/:orderId shows track-order-id, status-stepper with step-* data-state transitions (paid=active->done as admin updates), track-map renders. On out_for_delivery: .courier-marker present, track-message contains 'Pak Wiwik Express'. On completed: all steps done",
+    "Frontend /profile shows orders list with quantity labels ('200 g', '2 pcs'), Bayar & Lacak buttons visible per order",
+    "Frontend /admin: tab-orders shows PRIORITY DISPATCH/DIDAHULUKAN badge for Ibu Setia (loyal); QRIS PAID/UNPAID badges; gmaps-link-<id> present per order with correct href (google.com/maps/dir origin=store dest=customer). tab-map renders leaflet admin map. tab-inventory: bulk-price-btn opens dialog with bulk-percent/bulk-category/bulk-save; add-product-btn opens dialog with pf-unit select. tab-analytics: chart-revenue/orders/popular/growth + period-daily/weekly/monthly present",
+    "Admin new-order-alert modal (data-testid=new-order-alert) fires when an order's payment_status flips to paid (within admin 6s poll); alert-dismiss closes it"
+  ],
+  "test_report_links": [
+    "/app/backend/tests/test_wiwik_spec.py",
+    "/app/test_reports/pytest/wiwik_results.xml"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_wiwik_spec.py (new pytest suite for iteration_3 spec)",
+    "/app/backend/tests/test_loyalty_flow.py (removed — outdated per handoff)"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py:498 create_order does NOT roll back stock decrement if the following payment/token step fails downstream; if the client aborts before payment it leaves stock reduced. Consider background job to auto-cancel unpaid orders after N minutes and restore stock.",
+    "server.py:437 bulk_price percent rounding to nearest Rp100 is fine, but percent AND updates payload combined runs both branches sequentially (documented behavior — no bug, but callers should send one or the other).",
+    "server.py:583 midtrans_token: on 502 from Midtrans, order remains created without snap_token; a retry path from Profile 'Bayar' button relies on POST /payments/midtrans/token — verified works, no fix needed.",
+    "Checkout.js debounced re-quote on subtotal change (line 46-53) may spam Nominatim if user is fast; Nominatim results are cached server-side by normalized address so effective cost is low, but consider gating on address change only.",
+    "Admin.js audio alert still uses window.AudioContext without prior user gesture; solution is already gated behind sound-toggle-btn (good). No action needed.",
+    "Track.js pointAlong uses raw lat/lng Euclidean distance for segment weighting; fine for short intra-city routes but not geodesically accurate. Cosmetic only."
+  ],
+  "success_rate": {"backend": "100% (14/14 tests)", "frontend": "100%"},
+  "test_credentials": "See /app/memory/test_credentials.md — admin bagussatrioaje@gmail.com/Admin@123, setia@wiwiksayur.co.id/Setia@123, reguler@wiwiksayur.co.id/Reguler@123",
+  "seed_data_creation": "Test run created ~8 orders under reguler and 1 under setia (5 marked paid/completed, 3 pending). Geocache populated with the Senopati address so retest is near-instant.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Regression suite: /app/backend/tests/test_wiwik_spec.py (14 tests). Nominatim rate limit is 1 req/s — tests already sleep(1.2s) between geocode-touching tests. Geocache is persistent in Mongo so repeated Senopati calls are fast. Midtrans sandbox is REAL: mock-pay endpoint returns 400 (verified). To simulate paid orders in E2E, use admin PUT /api/admin/orders/{id}/status {\"status\":\"paid\"} — this both flips payment_status and status. Admin polls every 6s; wait ~7-8s after flipping to see the new-order-alert modal. All 4 track steps (paid/processing/out_for_delivery/completed) verified with data-state attribute; courier-marker renders once status=out_for_delivery + dispatched_at is set."
+}

@@ -1,0 +1,50 @@
+{
+  "summary": "Iteration 2 focused on the items iteration_1 could not verify: loyalty flag, priority order flag, PRIORITY DELIVERY badge, checkout map/quote flow, mock-pay flow, admin inventory + analytics, admin guard (403 for customer). All 7 backend pytest tests PASSED. Full end-to-end frontend flow verified for setia (loyal), reguler (non-loyal), and admin. .co.id emails now log in successfully (previous blocker resolved). Admin guard now correctly returns 403 for authenticated customer.",
+  "tested_scope": ["backend", "frontend", "auth", "integration", "e2e"],
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Admin & Checkout Dialogs", "issues": ["React a11y console warning: 'Missing Description or aria-describedby={undefined} for DialogContent' — add DialogDescription to QRIS modal, Product dialog, and inventory edit dialog for a11y compliance"]}
+    ]
+  },
+  "passed": [
+    "POST /api/auth/login setia@wiwiksayur.co.id + GET /api/auth/me → is_pelanggan_setia=true",
+    "POST /api/auth/login reguler@wiwiksayur.co.id + GET /api/auth/me → is_pelanggan_setia=false",
+    "POST /api/orders as setia → is_priority=true",
+    "POST /api/orders as reguler → is_priority=false",
+    "GET /api/admin/orders as admin returns list and includes at least one is_priority=true order",
+    "GET /api/admin/analytics as customer → 403 (was 401 in iteration_1)",
+    "GET /api/admin/analytics as admin → 200 with full schema",
+    "Frontend /checkout: Leaflet map renders, loyalty-checkout banner visible for setia",
+    "Distance & fee update on map click: 1.24km (Rp8000) → 3.31km (Rp13000). Matches backend tier: 8000 base + ceil((d-2))*2500 per km beyond 2km",
+    "Mock Midtrans flow: place-order → QRIS dialog → mock-pay → toast 'Pembayaran QRIS berhasil disimulasikan!' → redirect /profile with 'Pelanggan Setia' badge visible",
+    "Admin /admin route shows 2 PRIORITY DELIVERY badges (red, pulsing) on setia orders; Regular orders show plain 'Regular' badge",
+    "Admin inventory tab: edit product stock via dialog → toast 'Produk tersimpan' → analytics/inventory reload",
+    "Admin analytics tab: Total Pendapatan, Total Pesanan, Pending count cards + daily revenue bars + Top Pelanggan list rendered",
+    "Reguler user on /checkout: NO loyalty-checkout banner (correct)"
+  ],
+  "test_report_links": [
+    "/app/backend/tests/test_loyalty_flow.py",
+    "/app/test_reports/pytest/loyalty_results.xml"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_loyalty_flow.py"
+  ],
+  "action_items": [
+    "OPTIONAL a11y polish: add <DialogDescription> (or aria-describedby) to Checkout QRIS Dialog (Checkout.js line ~176), Admin ProductDialog (Admin.js line ~230) to remove React console warning.",
+    "OPTIONAL: iteration_1 minor observation about ongkir rounding — backend returns Rp13000 for 3.31 km. Formula appears to be 8000 + ceil(distance_km - 2) * 2500 (i.e., billed per whole km, not fractional). Confirm this matches product spec ('Rp2500/km' — could be interpreted as fractional km × 2500 = Rp11275 for 3.31 km). No code change unless product owner clarifies."
+  ],
+  "critical_code_review_comments": [
+    "Admin.js: audio alert uses window.AudioContext without user gesture; on Chrome the beep may be blocked until first click on the page. Consider gating alerts behind a one-time 'Enable notifications' toggle.",
+    "Checkout.js: place order calls /payments/midtrans/token immediately after /orders; on network failure the order is created but no payment attached (order is in pending). Add cleanup or a retry entrypoint in Profile.",
+    "server.py seed loyalty user: relies on .co.id TLD to bypass pydantic EmailStr reserved-TLD rule. Consider adding a custom EmailStr validator instead of relying on TLD choice."
+  ],
+  "success_rate": {"backend": "100% (7/7 tests)", "frontend": "100%"},
+  "test_credentials": "See /app/memory/test_credentials.md — admin bagussatrioaje@gmail.com/Admin@123, setia@wiwiksayur.co.id/Setia@123, reguler@wiwiksayur.co.id/Reguler@123",
+  "seed_data_creation": "Tests created 2 new orders (1 setia priority, 1 reguler non-priority) plus 1 completed mock-paid order via UI. These stay in DB.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All iteration_1 blockers resolved. Backend regression suite: /app/backend/tests/test_loyalty_flow.py (uses correct payload shape: product_id + quantity in items). Iteration_1's separate smoke suite (home/cart/store/products/shipping_quote/analytics) not re-run — assumed still green (no code touched to break it). If future iterations touch orders schema, note items[].quantity (NOT qty) is required."
+}

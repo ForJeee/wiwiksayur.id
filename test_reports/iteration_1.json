@@ -1,0 +1,43 @@
+{
+  "summary": "First-finish smoke tests on wiwiksayur.com backend + frontend. Home, cart, auth (admin), admin dashboard, products, categories, store info, shipping quote (free & paid tiers), order create → mock Midtrans token → mock-pay, admin analytics, admin guard all working. CRITICAL BLOCKER: seeded loyalty & regular test users (setia@wiwiksayur.test, reguler@wiwiksayur.test) cannot login — Pydantic EmailStr rejects the .test TLD as reserved, so entire Pelanggan Setia badge / PRIORITY DELIVERY flow is untestable end-to-end via those seeded accounts.",
+  "tested_scope": ["backend", "frontend", "auth", "integration"],
+  "passed": [
+    "GET /api/store/info returns lat=-6.2297, lng=106.8074, WA +6285814420843",
+    "GET /api/products returns 12 seeded products",
+    "GET /api/products/categories returns 4 categories",
+    "POST /api/auth/login admin (bagussatrioaje@gmail.com) → session_token + role=admin",
+    "POST /api/auth/register creates new user + returns session_token; GET /api/auth/me returns is_pelanggan_setia field",
+    "POST /api/shipping/quote 250k @ 0.48km → free=true, fee=0, correct reason",
+    "POST /api/shipping/quote 100k @ 3.04km → fee=13000 (8000 base + 2500×2 beyond 2km), upgrade hint returned",
+    "POST /api/orders (flat body: items, lat, lng, address, recipient_name, recipient_phone) creates order, computes total incl. ongkir",
+    "POST /api/payments/midtrans/token returns {token: MOCK-..., mock:true} (mock mode as expected)",
+    "POST /api/payments/midtrans/mock-pay/{id} → {ok:true}, order flips to paid/paid",
+    "GET /api/admin/analytics as admin returns full schema",
+    "Admin guard: anonymous & customer both blocked from /api/admin/analytics",
+    "Frontend home: brand, 12 product-cards, 12 add buttons, cart badge increments to 1 on Tambah, cart drawer opens with subtotal",
+    "Frontend /auth: tab-login, google-login-btn, input fields, submit render",
+    "Admin login via UI succeeds, /admin route accessible for admin role, shows stat cards + orders list (WWK-2A993B7146 visible with QRIS paid status), inventory & analytics tabs present"
+  ],
+  "failed": [
+    {
+      "area": "Backend auth / seeded test users",
+      "issue": "POST /api/auth/login rejects setia@wiwiksayur.test and reguler@wiwiksayur.test with Pydantic EmailStr error: 'The part after the @-sign is a special-use or reserved name that cannot be used with email.' Both users are seeded in DB but unreachable, blocking Pelanggan Setia badge test, PRIORITY DELIVERY badge test, and reguler is_pelanggan_setia=false verification.",
+      "evidence": "curl POST /api/auth/login {email: 'setia@wiwiksayur.test'} → 422 value_error on body.email. Same for reguler@wiwiksayur.test.",
+      "priority": "HIGH"
+    },
+    {
+      "area": "Backend admin guard status code",
+      "issue": "Non-admin authenticated user hitting /api/admin/analytics returns 401 instead of expected 403 (spec asked for 403 for non-admin, 401 for anonymous).",
+      "evidence": "curl with valid customer bearer → status=401 (same as anonymous). Minor spec mismatch.",
+      "priority": "LOW"
+    }
+  ],
+  "action_items": [
+    "Fix seeded test-user emails: either (a) change seeded emails to a valid TLD like setia@wiwiksayur.example is ALSO reserved — use setia@wiwiksayur.co / setia@wiwiksayur.id, OR (b) relax email validation (replace EmailStr with a custom validator / use pydantic-settings EmailStr with allow_test_tlds, OR set email_validator's `check_deliverability=False` still won't help — reserved-TLD check is separate). Recommend switching seeded emails to a real-looking domain (e.g. @wiwiksayur.co.id) and updating /app/memory/test_credentials.md accordingly.",
+    "Optional: return 403 (not 401) for authenticated-but-non-admin requests on /api/admin/* to match spec.",
+    "Then re-test: setia login → /me is_pelanggan_setia=true, create order → is_priority=true, admin UI shows PRIORITY DELIVERY badge."
+  ],
+  "success_rate": {"backend": "85%", "frontend": "100%"},
+  "retest_needed": true,
+  "full_testing_deferred": true
+}

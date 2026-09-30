@@ -1,0 +1,7 @@
+/* app-wide styles (font & tokens live in index.css) */
+.App { min-height: 100vh; }
+
+.courier-marker { width: 36px; height: 36px; border-radius: 9999px; background: #f59e0b; border: 3px solid #fff; box-shadow: 0 4px 14px rgba(245,158,11,.5); display: grid; place-items: center; animation: courier-pulse 1.4s ease-in-out infinite; }
+@keyframes courier-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+.store-marker { width: 30px; height: 30px; border-radius: 8px; background: #065f46; color: #fff; font-weight: 800; display: grid; place-items: center; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+.home-marker { width: 22px; height: 22px; border-radius: 9999px; background: #2563eb; border: 3px solid #fff; box-shadow: 0 0 0 6px rgba(37,99,235,.2); }

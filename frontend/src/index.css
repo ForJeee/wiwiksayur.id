@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+@import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-color: #FDFBF7;
+    color: #0f172a;
+}
+
+.font-mono, code { font-family: 'JetBrains Mono', monospace; }
+
+@layer base {
+    :root {
+        --background: 42 47% 98%;
+        --foreground: 158 64% 9%;
+        --card: 0 0% 100%;
+        --card-foreground: 158 64% 9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 158 64% 9%;
+        --primary: 142 71% 35%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 60 9% 96%;
+        --secondary-foreground: 158 64% 9%;
+        --muted: 60 5% 94%;
+        --muted-foreground: 215 14% 40%;
+        --accent: 45 93% 47%;
+        --accent-foreground: 24 60% 12%;
+        --destructive: 0 72% 51%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 158 10% 88%;
+        --input: 158 10% 88%;
+        --ring: 142 71% 35%;
+        --radius: 0.75rem;
+    }
+}
+
+@layer base {
+    * { @apply border-border; }
+    body { @apply bg-background text-foreground; }
+}
+
+/* Leaflet fix inside cards */
+.leaflet-container { z-index: 0; border-radius: 0.75rem; }
+
+/* Loyalty shimmer */
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.loyal-shimmer {
+    background: linear-gradient(90deg, #f59e0b, #fde68a, #f59e0b);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+}
+
+/* Priority pulse */
+@keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(220,38,38,0.5); } 70% { box-shadow: 0 0 0 12px rgba(220,38,38,0); } 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0); } }
+.pulse-priority { animation: pulse-ring 1.5s infinite; }
+
+/* Category pill scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

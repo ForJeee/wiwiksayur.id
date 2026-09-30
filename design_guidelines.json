@@ -1,0 +1,172 @@
+{
+  "project_name": "wiwiksayur.com",
+  "brand_identity": {
+    "tagline": "Sayur & Buah Segar Langsung dari Petani ke Dapur Anda",
+    "theme_mode": "Light Theme Preferred (Warm Organic & Vibrant Fresh)",
+    "archetype": "ORGANIC & EARTHY with KINETIC TROPICAL FRESHNESS",
+    "emotional_tone": "Fresh, trustworthy, appetizing, convenient, community-focused Indonesian farm-to-table",
+    "locale": "id-ID (Bahasa Indonesia with Rupiah currency Rp)"
+  },
+  "typography": {
+    "font_family_pairing": {
+      "headings": "Plus Jakarta Sans, Outfit, sans-serif (Bold, tight tracking, energetic)",
+      "body": "Plus Jakarta Sans, Inter, sans-serif (Clean, readable, high legibility for Indonesian product titles)",
+      "mono_accent": "JetBrains Mono, monospace (For order numbers, distances, delivery calculation & prices)"
+    },
+    "font_sources": "Import Google Fonts in index.html or index.css: @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');",
+    "scale_rules": {
+      "h1_hero": "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-emerald-950",
+      "h2_section": "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-emerald-950",
+      "h3_card_title": "text-lg sm:text-xl font-bold text-slate-900",
+      "body_base": "text-sm sm:text-base text-slate-700 leading-relaxed",
+      "badge_label": "text-xs font-semibold tracking-wider uppercase",
+      "price_highlight": "font-mono font-extrabold text-emerald-700 text-base sm:text-lg"
+    }
+  },
+  "colors": {
+    "palette_strategy": {
+      "primary_green": "#16A34A (Emerald-600 - Main action, badges, add to cart)",
+      "primary_green_dark": "#15803D (Emerald-700 - Hover state, main headers)",
+      "deep_forest": "#064E3B (Emerald-900 - Text emphasis, hero headers, footer bg)",
+      "sunny_yellow": "#EAB308 (Amber-500 - Free shipping promo bar, ratings, Pelanggan Setia badge)",
+      "citrus_orange": "#F97316 (Orange-500 - Flash deal badge, urgent stock, discount pill)",
+      "fresh_chili_red": "#DC2626 (Red-600 - Destructive actions, pending alerts)",
+      "neutral_bg": "#FDFBF7 (Warm Bone / Soft Linen background to avoid cold white digital glare)",
+      "card_bg": "#FFFFFF (Pure crisp white with 1px border border-emerald-900/10)",
+      "surface_muted": "#F3F4F1 (Soft sage gray for input fields, disabled tabs, table headers)"
+    },
+    "gradients": {
+      "hero_banner": "bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-950 (Rich organic dark green backdrop with subtle grid texture)",
+      "loyalty_badge": "bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 (Pelanggan Setia Gold Shimmer)",
+      "free_shipping_bar": "bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white"
+    },
+    "accessibility_rules": {
+      "contrast_ratio": "Minimum WCAG AA 4.5:1 for normal text, 3:1 for large display text. Never place pure white text over light yellow. Always pair yellow badges with text-amber-950 or text-slate-900.",
+      "focus_ring": "ring-2 ring-emerald-600 ring-offset-2 ring-offset-emerald-50"
+    }
+  },
+  "layout_and_grids": {
+    "marketing_storefront": {
+      "hero_layout": "Asymmetric Bento grid (Hero Banner col-span-12 lg:col-span-8, Quick Delivery Distance Widget + Promo Banner col-span-12 lg:col-span-4)",
+      "category_pills_bar": "Horizontal scrollable sticky bar with subtle backdrop blur (backdrop-blur-md bg-white/90 border-b border-emerald-100 py-3 px-4)",
+      "product_grid": "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6",
+      "cart_drawer": "Fixed right sheet drawer (w-full max-w-md bg-white shadow-2xl z-50)"
+    },
+    "admin_dashboard": {
+      "structure": "Sidebar navigation + Top status bar + High-density responsive grid (grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6)",
+      "audio_visual_alerts": "Top floating sticky bar with pulsing amber/emerald pulse dot + real-time notification sound player for new incoming orders"
+    }
+  },
+  "media_and_image_urls": {
+    "hero_and_banners": [
+      {
+        "category": "hero_banner_farm",
+        "url": "https://images.unsplash.com/photo-1591586116988-62fe65164f8d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwzfHxmcmVzaCUyMG9yZ2FuaWMlMjB2ZWdldGFibGVzJTIwZmFybSUyMHByb2R1Y2UlMjBtYXJrZXR8ZW58MHx8fHwxNzkwNTMzMTc4fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Panen Sayur Segar Pasar Tani WiwikSayur"
+      },
+      {
+        "category": "delivery_hero_van",
+        "url": "https://images.unsplash.com/photo-1657288649124-b80bdee3c17e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2R3h8MHwxfHNlYXJjaHwxfHxmcmVzaCUyMGRlbGl2ZXJ5JTIwZ3JvY2VyeSUyMGJveCUyMG9yZ2FuaWMlMjBwcm9kdWNlfGVufDB8fHx8MTc5MDUzMzE4OXww&ixlib=rb-4.1.0&q=85",
+        "description": "Pengiriman Sayur Segar Langsung Ke Rumah"
+      }
+    ],
+    "category_thumbnails": [
+      {
+        "name": "Sayuran Hijau & Organik",
+        "url": "https://images.unsplash.com/photo-1471193945509-9ad0617afabf?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHw0fHxmcmVzaCUyMG9yZ2FuaWMlMjB2ZWdldGFibGVzJTIwZmFybSUyMHByb2R1Y2UlMjBtYXJrZXR8ZW58MHx8fHwxNzkwNTMzMTc4fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Wortel, Daun Bawang, Bayam & Kangkung Segar"
+      },
+      {
+        "name": "Buah Tropical Segar",
+        "url": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxmcmVzaCUyMHRyb3BpY2FsJTIwZnJ1aXRzJTIwcGFwYXlhJTIwbWFuZ28lMjBkcmFnb25mcnVpdHxlbnwwfHx8fDE3OTA1MzMxNzh8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Mangga Harum Manis & Buah Naga Segar"
+      },
+      {
+        "name": "Bumbu Dapur & Cabai",
+        "url": "https://images.unsplash.com/photo-1766158554276-fcba78477081?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2ODh8MHwxfHNlYXJjaHwxfHxmcmVzaCUyMHJlZCUyMGNoaWxpJTIwcGVwcGVycyUyMEFzaWFuJTIwc3BpY2VzJTIwbWFya2V0fGVufDB8fHx8MTc5MDUzMzE4OXww&ixlib=rb-4.1.0&q=85",
+        "description": "Cabai Rawit Merah, Bawang Merah & Bumbu Tradisional"
+      },
+      {
+        "name": "Paket Hemat Sembako & Dapur",
+        "url": "https://images.unsplash.com/photo-1567306295427-94503f8300d7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwyfHxmcmVzaCUyMG9yZ2FuaWMlMjB2ZWdldGFibGVzJTIwZmFybSUyMHByb2R1Y2UlMjBtYXJrZXR8ZW58MHx8fHwxNzkwNTMzMTc4fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Kotak Panen Petani - Paket Masak Lengkap"
+      }
+    ],
+    "sample_product_images": [
+      {
+        "id": "prod_1",
+        "name": "Bayam Organik Petik Pagi 250g",
+        "price": 6500,
+        "category": "Sayuran",
+        "url": "https://images.unsplash.com/photo-1471193945509-9ad0617afabf?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHw0fHxmcmVzaCUyMG9yZ2FuaWMlMjB2ZWdldGFibGVzJTIwZmFybSUyMHByb2R1Y2UlMjBtYXJrZXR8ZW58MHx8fHwxNzkwNTMzMTc4fDA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "prod_2",
+        "name": "Cabai Rawit Merah Super 200g",
+        "price": 14500,
+        "category": "Bumbu Dapur",
+        "url": "https://images.unsplash.com/photo-1766158554276-fcba78477081?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2ODh8MHwxfHNlYXJjaHwxfHxmcmVzaCUyMHJlZCUyMGNoaWxpJTIwcGVwcGVycyUyMEFzaWFuJTIwc3BpY2VzJTIwbWFya2V0fGVufDB8fHx8MTc5MDUzMzE4OXww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "prod_3",
+        "name": "Buah Naga Merah Manis 1 kg",
+        "price": 28000,
+        "category": "Buah-buahan",
+        "url": "https://images.unsplash.com/photo-1585138774489-caf6e48633b5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHw0fHxmcmVzaCUyMHRyb3BpY2FsJTIwZnJ1aXRzJTIwcGFwYXlhJTIwbWFuZ28lMjBkcmFnb25mcnVpdHxlbnwwfHx8fDE3OTA1MzMxNzh8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "prod_4",
+        "name": "Tomat Ceri & Tomat Merah Segar 500g",
+        "price": 11000,
+        "category": "Sayuran",
+        "url": "https://images.unsplash.com/photo-1485637701894-09ad422f6de6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxmcmVzaCUyMG9yZ2FuaWMlMjB2ZWdldGFibGVzJTIwZmFybSUyMHByb2R1Y2UlMjBtYXJrZXR8ZW58MHx8fHwxNzkwNTMzMTc4fDA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "prod_5",
+        "name": "Mangga Harum Manis Grade A 1 kg",
+        "price": 32000,
+        "category": "Buah-buahan",
+        "url": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxmcmVzaCUyMHRyb3BpY2FsJTIwZnJ1aXRzJTIwcGFwYXlhJTIwbWFuZ28lMjBkcmFnb25mcnVpdHxlbnwwfHx8fDE3OTA1MzMxNzh8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "prod_6",
+        "name": "Keranjang Sayur Komplit Wiwik (Family Pack)",
+        "price": 68000,
+        "category": "Paket Hemat",
+        "url": "https://images.unsplash.com/photo-1635774855717-0aec182f92cc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwzfHxmcmVzaCUyMGRlbGl2ZXJ5JTIwZ3JvY2VyeSUyMGJveCUyMG9yZ2FuaWMlMjBwcm9kdWNlfGVufDB8fHx8MTc5MDUzMzE4OXww&ixlib=rb-4.1.0&q=85"
+      }
+    ]
+  },
+  "key_component_guidelines": {
+    "loyalty_badge_pelanggan_setia": {
+      "trigger_condition": "Customer has 10 or more completed orders (order_count >= 10)",
+      "visual_style": "Shimmering Amber Gold Pill Badge with Crown/Star Icon, text 'Pelanggan Setia Wiwik', unlocks 10% discount auto-applied at checkout or free shipping perk.",
+      "placement": "Navbar Profile, Customer Profile Header, Checkout Order Summary"
+    },
+    "dynamic_delivery_fee_calculator": {
+      "logic": "Haversine distance between Store Origin (e.g., Jakarta South Depot - Lat: -6.2297, Lng: 106.8074) and Customer Pinned Leaflet Map Address.",
+      "tier_pricing": "Base Fee Rp 8.000 for first 3 km + Rp 2.000/km above 3 km. FREE SHIPPING if Cart Subtotal >= Rp 100.000.",
+      "smart_notification_bar": "Interactive Progress Bar on Top of Cart/Checkout: 'Tambah Rp 25.000 lagi untuk GRATIS ONGKIR!'"
+    },
+    "qris_payment_modal": {
+      "visual_style": "Official Indonesian QRIS branded modal with mock QR Code generator, countdown timer (15:00 min), dynamic order ID reference, and Simulated Payment Success webhook trigger button for testing."
+    },
+    "admin_realtime_order_alerts": {
+      "visual": "Flashing Red/Amber banner + Animated Bell Icon in Top Header when a new 'PENDING' order arrives.",
+      "audio": "Web Audio Synthesizer or chime sound effect on order event."
+    }
+  },
+  "instructions_to_main_agent": {
+    "file_structure": "Use standard React JavaScript files (.js / .jsx). Do NOT write .tsx code.",
+    "testing_ids": "CRITICAL: MUST include `data-testid` on all interactive buttons, inputs, links, badges, tab items, cart controls, and admin order action buttons.",
+    "icons_library": "Use `lucide-react` icons (ShoppingBag, Truck, MapPin, Award, ShieldCheck, Flame, Bell, Phone, CheckCircle, Search, Plus, Minus, Trash2).",
+    "toast_notifications": "Use `sonner` via `toast.success()`, `toast.error()`, `toast.info()` for cart updates, login states, and QRIS payments."
+  },
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Never produce generic centered text layouts or plain white Vercel templates.",
+    "Always wrap currency in Indonesian format: `new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(price)` -> Rp 15.000.",
+    "Containers with borders MUST have explicit internal padding (`p-4`, `p-6`) to avoid edge text collision.",
+    "Provide micro-animations on hover (`hover:-translate-y-0.5 transition-transform duration-200 shadow-md`).",
+    "All navigation bars must remain visible and legible with standard backdrop blur and solid or semi-solid glass layer."
+  ]
+}
